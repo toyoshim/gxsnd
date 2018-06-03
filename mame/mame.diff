@@ -1,0 +1,54 @@
+diff --git a/src/mame/drivers/konamigx.cpp b/src/mame/drivers/konamigx.cpp
+index f9c121f189..df1f9ab9c6 100644
+--- a/src/mame/drivers/konamigx.cpp
++++ b/src/mame/drivers/konamigx.cpp
+@@ -1108,6 +1108,29 @@ WRITE16_MEMBER(konamigx_state::tms57002_control_word_w)
+ 	}
+ }
+ 
++WRITE16_MEMBER(konamigx_state::load_gxsnd_w)
++{
++	uint32_t addr = 0x00108000;
++	uint16_t *rom = (uint16_t*)memregion("soundcpu")->base();
++	rom[0x6c00 >> 1] = addr >> 16;
++	rom[0x6c02 >> 1] = addr & 0xffff;
++	FILE *fp = fopen("gxsnd.dat", "rb");
++	while (fp) {
++		int c1 = fgetc(fp);
++		int c2 = fgetc(fp);
++		if (c1 == EOF && c2 == EOF)
++			break;
++		space.write_word(addr, (c1 << 8) | (c2 & 0xff));
++		addr += 2;
++	}
++	fclose(fp);
++	m_k056800->host_w(space, 0, 0x0e);
++	m_k056800->host_w(space, 1, 0x01);
++	m_k056800->host_w(space, 2, 0x00);
++	m_k056800->host_w(space, 3, 0x00);
++	m_k056800->host_w(space, 7, 0x00);
++}
++
+ /* 68000 memory handling */
+ void konamigx_state::gxsndmap(address_map &map)
+ {
+@@ -1119,6 +1142,7 @@ void konamigx_state::gxsndmap(address_map &map)
+ 	map(0x400000, 0x40001f).rw(m_k056800, FUNC(k056800_device::sound_r), FUNC(k056800_device::sound_w)).umask16(0x00ff);
+ 	map(0x500000, 0x500001).rw(this, FUNC(konamigx_state::tms57002_status_word_r), FUNC(konamigx_state::tms57002_control_word_w));
+ 	map(0x580000, 0x580001).nopw(); // 'NRES' - D2: K056602 /RESET
++	map(0x800000, 0x800001).w(this, FUNC(konamigx_state::load_gxsnd_w));
+ }
+ 
+ void konamigx_state::gxtmsmap(address_map &map)
+diff --git a/src/mame/includes/konamigx.h b/src/mame/includes/konamigx.h
+index c4840db60a..eb7acfdf67 100644
+--- a/src/mame/includes/konamigx.h
++++ b/src/mame/includes/konamigx.h
+@@ -95,6 +95,7 @@ public:
+ 	DECLARE_WRITE16_MEMBER(tms57002_data_word_w);
+ 	DECLARE_READ16_MEMBER(tms57002_status_word_r);
+ 	DECLARE_WRITE16_MEMBER(tms57002_control_word_w);
++	DECLARE_WRITE16_MEMBER(load_gxsnd_w);
+ 	DECLARE_READ16_MEMBER(K055550_word_r);
+ 	DECLARE_WRITE16_MEMBER(K055550_word_w);
+ 	DECLARE_WRITE16_MEMBER(K053990_martchmp_word_w);

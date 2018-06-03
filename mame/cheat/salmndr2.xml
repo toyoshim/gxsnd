@@ -1,0 +1,50 @@
+<mamecheat version="1">
+  <cheat desc="Load GXSND">
+    <script state="on">
+      <action>soundcpu.pb@800000=01</action>
+    </script>
+  </cheat>
+
+  <cheat desc="BGM Test">
+    <parameter>
+      <item value="0x10c">A THEME OF THE SALAMANDER2</item>
+      <item value="0x101">SILVER WINGS AGAIN</item>
+      <item value="0x102">SENSATION</item>
+      <item value="0x103">ALL IS VANITY</item>
+      <item value="0x104">SERIOUS! SERIOUS! SERIOUS!</item>
+      <item value="0x105">SPEED</item>
+      <item value="0x106">DEAR BLUE</item>
+
+      <item value="0x115">THEME OF THE GOREM</item>
+      <item value="0x10f">THEME OF THE MECHANICAL BOSS</item>
+      <item value="0x110">THEME OF THE LIVING BODY BOSS</item>
+      <item value="0x113">PRELUDE OF THE LAST BATTLE</item>
+      <item value="0x116">GIGA'S RAGE</item>
+      <item value="0x10d">BEGINING FROM THE ENDLESS</item>
+      <item value="0x10a">WHAT'S YOUR NAME</item>
+      <item value="0x10b">AND THEN ......</item>
+      <item value="0x112">NO FUTURE</item>
+      <item value="0x119">FIRE TRIPPER</item>
+      <item value="0x118">NERVOUS BREAKDOWN</item>
+      <item value="0x117">ENDING - AM SHOW VER.</item>
+    </parameter>
+    <script state="change">
+      <action>maincpu.pb@d52000=param%100</action>
+      <action>maincpu.pb@d52002=param>>8</action>
+      <action>maincpu.pb@d52004=00</action>
+      <action>maincpu.pb@d52006=00</action>
+      <action>maincpu.pb@d5200e=01</action>
+    </script>
+  </cheat>
+
+  <cheat desc="Loop 1 BGM">
+    <parameter>
+      <item value="0xc4">Loop 1</item>
+      <item value="0x54">Loop 2</item>
+    </parameter>
+    <script state="run">
+      <action>soundcpu.rb@67EB=param</action>
+    </script>
+  </cheat>
+
+</mamecheat>

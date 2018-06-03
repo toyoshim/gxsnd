@@ -1,0 +1,301 @@
+#include "../gxsnd.h"
+
+	.org	0x00108000
+HEAD:
+	.dc.l	CH_1
+	.dc.l	CH_2
+	.dc.l	CH_3
+	.dc.l	CH_4
+	.dc.l	CH_5
+	.dc.l	CH_6
+	.dc.l	CH_7
+	.dc.l	CH_8
+	.dc.l	CH_9
+	.dc.l	CH_10
+	.dc.l	CH_11
+	.dc.l	CH_12
+	.dc.l	CH_13
+	.dc.l	CH_14
+	.dc.l	CH_15
+	.dc.l	CH_16
+	.dc.l	DATA_END
+
+#define TEMPO 230
+
+// Melody
+#define VC1 127
+CH_1:
+	.dc.b	BPM(TEMPO),REVERB(15,15)
+	.dc.b	VOICE(2),AR(120),PAN(7),RR(16),LFO(96,8,8),LFO_RAMP(32),DETUNE(1)
+LOOP_1:
+	.dc.b	G4LG(L2,100,VC1),TIE(L2,100),TIE(L2,100),C5(VC1)
+	.dc.b	A4LG(L2,100,VC1),TIE(L2,100),TIE(L2,100),D5(VC1)
+	.dc.b	C5LG(L2,100,VC1),TIE(L2,100),TIE(L2,100),G5(VC1)
+	.dc.b	Gb5LG(L2,100,VC1),TIE(L2,100),TIE(L2,100)
+	.dc.b	A5LG(L32,90,VC1-5),Ab5(VC1-5),G5(VC1-5),Gb5(VC1-5)
+	.dc.b	F5(VC1-5),E5(VC1-5),Eb5(VC1-5),D5(VC1-5)
+	.dc.b	Db5(VC1-5),C5(VC1-5),B4(VC1-5),Bb4(VC1-5)
+	.dc.b	A4(VC1-5),Ab4(VC1-5),G4(VC1-5),Gb4(VC1-5)
+	.dc.b	LOOP
+	.dc.l	LOOP_1
+	.dc.b	END
+
+// Melody - delay
+#define VC2 115
+CH_2:
+	.dc.b	BPM(TEMPO),REVERB(15,15)
+	.dc.b	VOICE(2),AR(118),PAN(9),RR(16),LFO(96,8,8),LFO_RAMP(32),DETUNE(-8),R(L8_)
+LOOP_2:
+	.dc.b	G4LG(L2,100,VC2),TIE(L2,100),TIE(L2,100),C5(VC2)
+	.dc.b	A4LG(L2,100,VC2),TIE(L2,100),TIE(L2,100),D5(VC2)
+	.dc.b	C5LG(L2,100,VC2),TIE(L2,100),TIE(L2,100),G5(VC2)
+	.dc.b	Gb5LG(L2,100,VC2),TIE(L2,100),TIE(L2,100)
+	.dc.b	A5LG(L32,90,VC2-5),Ab5(VC2-5),G5(VC2-5),Gb5(VC2-5)
+	.dc.b	F5(VC2-5),E5(VC2-5),Eb5(VC2-5),D5(VC2-5)
+	.dc.b	Db5(VC2-5),C5(VC2-5),B4(VC2-5),Bb4(VC2-5)
+	.dc.b	A4(VC2-5),Ab4(VC2-5),G4(VC2-5),Gb4(VC2-5)
+	.dc.b	LOOP
+	.dc.l	LOOP_2
+	.dc.b	END
+
+// SEQ
+#define VC3 124
+CH_3:
+	.dc.b	BPM(TEMPO),REVERB(15,15)
+	.dc.b	VOICE(5),AR(127),RR(48),LFO(48,12,4),DETUNE(0)
+LOOP_3:
+	.dc.b	REPEAT_START
+	.dc.b	PAN(1),PANNING(255,16)
+	.dc.b	G4LG(L16,40,VC3),G4(VC3),E5(VC3),C5(VC3)
+	.dc.b	G4(VC3),Gb5(VC3),D5(VC3),G4(VC3)
+	.dc.b	E5(VC3),C5(VC3),G4(VC3),Gb5(VC3)
+	.dc.b	D5(VC3),G4(VC3),E5(VC3),C5(VC3)
+	.dc.b	PAN(16),PANNING(255,1)
+	.dc.b	G4LG(L16,40,VC3),G4(VC3),E5(VC3),C5(VC3)
+	.dc.b	G4(VC3),Gb5(VC3),D5(VC3),G4(VC3)
+	.dc.b	E5(VC3),C5(VC3),G4(VC3),Gb5(VC3)
+	.dc.b	D5(VC3),G4(VC3),E5(VC3),C5(VC3)
+
+	.dc.b	PAN(1),PANNING(255,16)
+	.dc.b	A4LG(L16,40,VC3),A4(VC3),Gb5(VC3),D5(VC3)
+	.dc.b	A4(VC3),G5(VC3),D5(VC3),A4(VC3)
+	.dc.b	Gb5(VC3),D5(VC3),A4(VC3),G5(VC3)
+	.dc.b	D5(VC3),A4(VC3),Gb5(VC3),D5(VC3)
+	.dc.b	PAN(16),PANNING(255,1)
+	.dc.b	A4LG(L16,40,VC3),A4(VC3),Gb5(VC3),D5(VC3)
+	.dc.b	A4(VC3),G5(VC3),D5(VC3),A4(VC3)
+	.dc.b	Gb5(VC3),D5(VC3),A4(VC3),G5(VC3)
+	.dc.b	D5(VC3),A4(VC3),Gb5(VC3),D5(VC3)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_3
+
+	.dc.b	END
+
+// SEQ - delay
+#define VC4 118
+CH_4:
+	.dc.b	BPM(TEMPO),REVERB(15,15)
+	.dc.b	VOICE(5),AR(127),RR(48),LFO(48,12,4),DETUNE(-8),R(L16_)
+LOOP_4:
+	.dc.b	REPEAT_START
+	.dc.b	PAN(16),PANNING(255,1)
+	.dc.b	G4LG(L16,40,VC4),G4(VC4),E5(VC4),C5(VC4)
+	.dc.b	G4(VC4),Gb5(VC4),D5(VC4),G4(VC4)
+	.dc.b	E5(VC4),C5(VC4),G4(VC4),Gb5(VC4)
+	.dc.b	D5(VC4),G4(VC4),E5(VC4),C5(VC4)
+	.dc.b	PAN(1),PANNING(255,16)
+	.dc.b	G4LG(L16,40,VC4),G4(VC4),E5(VC4),C5(VC4)
+	.dc.b	G4(VC4),Gb5(VC4),D5(VC4),G4(VC4)
+	.dc.b	E5(VC4),C5(VC4),G4(VC4),Gb5(VC4)
+	.dc.b	D5(VC4),G4(VC4),E5(VC4),C5(VC4)
+
+	.dc.b	PAN(16),PANNING(255,1)
+	.dc.b	A4LG(L16,40,VC4),A4(VC4),Gb5(VC4),D5(VC4)
+	.dc.b	A4(VC4),G5(VC4),D5(VC4),A4(VC4)
+	.dc.b	Gb5(VC4),D5(VC4),A4(VC4),G5(VC4)
+	.dc.b	D5(VC4),A4(VC4),Gb5(VC4),D5(VC4)
+	.dc.b	PAN(1),PANNING(255,16)
+	.dc.b	A4LG(L16,40,VC4),A4(VC4),Gb5(VC4),D5(VC4)
+	.dc.b	A4(VC4),G5(VC4),D5(VC4),A4(VC4)
+	.dc.b	Gb5(VC4),D5(VC4),A4(VC4),G5(VC4)
+	.dc.b	D5(VC4),A4(VC4),Gb5(VC4),D5(VC4)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_4
+	.dc.b	END
+
+// Dist.Gt
+#define VV5 31
+#define VC5 120
+CH_5:
+	.dc.b	BPM(TEMPO),REVERB(4,15)
+	.dc.b	VOICE(VV5),AR(127),PAN(10),RR(100),LFO(0,0,0),DETUNE(0)
+LOOP_5:
+	.dc.b	REPEAT_START
+	.dc.b	C4LG(L2,99,VC5),R(L8),C4L(L8,VC5),R(L16),C4L(L16,VC5),R(L16),C4(VC5)
+	.dc.b	C4LG(L2,99,VC5),R(L8),C4L(L8,VC5),R(L16),C4L(L16,VC5),R(L16),C4(VC5)
+	.dc.b	D4LG(L2,99,VC5),R(L8),D4L(L8,VC5),R(L16),D4L(L16,VC5),R(L16),D4(VC5)
+	.dc.b	D4LG(L2,99,VC5),R(L8),D4L(L8,VC5),R(L16),D4L(L16,VC5),R(L16),D4(VC5)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_5
+	.dc.b	END
+
+// Chorus
+#define VV6 8
+#define VC6 115
+CH_6:
+	.dc.b	BPM(TEMPO),REVERB(8,8)
+	.dc.b	VOICE(VV6),AR(112),PAN(4),RR(8),LFO(48,12,7),LFO_RAMP(100),DETUNE(-6)
+LOOP_6:
+	.dc.b	REPEAT_START
+	.dc.b	C3LG(L2,100,VC6),TIE(L2,80),C4LG(L2,100,VC6),TIE(L2,80)
+	.dc.b	D3LG(L2,100,VC6),TIE(L2,80),D4LG(L2,100,VC6),TIE(L2,80)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_6
+	.dc.b	END
+
+CH_7:
+	.dc.b	BPM(TEMPO),REVERB(8,8)
+	.dc.b	VOICE(VV6),AR(112),PAN(8),RR(8),LFO(48,12,7),LFO_RAMP(100),DETUNE(0)
+LOOP_7:
+	.dc.b	REPEAT_START
+	.dc.b	E3LG(L2,100,VC6),TIE(L2,80),E4LG(L2,100,VC6),TIE(L2,80)
+	.dc.b	Gb3LG(L2,100,VC6),TIE(L2,80),Gb4LG(L2,100,VC6),TIE(L2,80)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_7
+	.dc.b	END
+
+CH_8:
+	.dc.b	BPM(TEMPO),REVERB(8,8)
+	.dc.b	VOICE(VV6),AR(112),PAN(12),RR(8),LFO(48,12,7),LFO_RAMP(100),DETUNE(6)
+LOOP_8:
+	.dc.b	REPEAT_START
+	.dc.b	G3LG(L2,100,VC6),TIE(L2,80),G4LG(L2,100,VC6),TIE(L2,80)
+	.dc.b	A3LG(L2,100,VC6),TIE(L2,80),A4LG(L2,100,VC6),TIE(L2,80)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_8
+	.dc.b	END
+
+// Hit
+#define VC9 124
+CH_9:
+	.dc.b	BPM(TEMPO),REVERB(8,15)
+	.dc.b	VOICE(62),AR(127),RR(100),LFO(0,0,0),DETUNE(0)
+LOOP_9:
+	.dc.b	REPEAT_START
+	.dc.b	PAN(4)
+	.dc.b	C5LG(L2,90,VC9),R(L4_),C5L(L16,VC9),C5(VC9)
+	.dc.b	C5LG(L2,90,VC9),R(L2)
+	.dc.b	PAN(12)
+	.dc.b	D5LG(L2,90,VC9),R(L4_),D5L(L16,VC9),D5(VC9)
+	.dc.b	D5LG(L2,90,VC9),R(L2)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_9
+	.dc.b	END
+
+// Dr.B
+#define _BL(l) C0L(l,127)
+#define _B C0(127)
+CH_10:
+	.dc.b	BPM(TEMPO),AR(123),REVERB(0,0),PAN(8),RHYTHM_ON
+LOOP_10:
+	.dc.b	REPEAT_START
+	.dc.b	_BL(L4),_B,_B,_B
+	.dc.b	_BL(L4),_B,_BL(L8_),_BL(L16),_BL(L8),_B
+	.dc.b	_BL(L4),_B,_B,_B
+	.dc.b	_BL(L4),_B,_B,_B
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_10
+	.dc.b	END
+
+// Dr.S
+#define _SL(l) Db2L(l,127)
+#define __SL(l) Db2L(l,123)
+#define _S Db2(127)
+#define _CL(l) A1L(l,127)
+CH_11:
+	.dc.b	BPM(TEMPO),AR(123),REVERB(0,0),PAN(6),RHYTHM_ON
+LOOP_11:
+	.dc.b	_CL(L4),_S,R(L4),_SL(L8_),__SL(L16)
+	.dc.b	R(L4),_S,R(L4),_SL(L16),_S,_S,_S
+	.dc.b	R(L4),_S,R(L4),_SL(L8_),__SL(L16)
+	.dc.b	R(L4),_S,R(L4),_SL(L16),_SL(L8),_SL(L16)
+
+	.dc.b	_CL(L4),_S,R(L4),_SL(L8_),__SL(L16)
+	.dc.b	R(L4),_S,R(L4),_SL(L16),_S,_S,_S
+	.dc.b	R(L4),_S,R(L4),_SL(L8_),__SL(L16)
+	.dc.b	R(L4),_SL(L8_),_SL(L16),__SL(L64),_SL(L32_),_SL(L16),_S,_S,Bb0(127),Bb0(127),C1(127),Db1(127)
+	.dc.b	LOOP
+	.dc.l	LOOP_11
+	.dc.b	END
+
+// Dr.H
+#define _CHL(l) Gb1L(l,123)
+#define _CH Gb1(123)
+#define _OHL(l) G1L(l,123)
+#define _OH G1(123)
+CH_12:
+	.dc.b	BPM(TEMPO),AR(123),REVERB(0,0),PAN(2),RHYTHM_ON
+LOOP_12:
+	.dc.b	REPEAT_START
+	.dc.b	_CHL(L8),_OH,_CHL(L16),_CH,_OHL(L8),_CH,_OH,_CHL(L16),_CH,_OHL(L8)
+	.dc.b	_CHL(L8),_OH,_CHL(L16),_CH,_OHL(L8),_CH,_OH,_OHL(L4)
+	.dc.b	REPEAT_END(3,0,0)
+	.dc.b	_CHL(L8),_OH,_CHL(L16),_CH,_OHL(L8),_CH,_OH,_CHL(L16),_CH,_OHL(L8)
+	.dc.b	_CHL(L8),_OH,_CHL(L16),_CH,_OHL(L8)
+	.dc.b	PAN(14),A1L(L8_,125),A1(125),A1L(L8,125),PAN(2)
+	.dc.b	LOOP
+	.dc.l	LOOP_12
+	.dc.b	END
+
+// Bass
+#define VC13 126
+CH_13:
+	.dc.b	BPM(TEMPO),REVERB(4,4)
+	.dc.b	VOICE(36),AR(127),PAN(5),RR(6),LFO(0,0,0),DETUNE(0)
+LOOP_13:
+	.dc.b	REPEAT_START
+	.dc.b	C2L(L8,VC13),C3L(L16,VC13),C2(VC13),C2(VC13),C2(VC13),D2(VC13),C2(VC13)
+	.dc.b	C2(VC13),C3(VC13),C2(VC13),C2(VC13),C2(VC13),C2(VC13),G2(VC13),C2(VC13)
+	.dc.b	C2(VC13),C2(VC13),C3(VC13),C2(VC13),G2(VC13),C2(VC13),E2(VC13),C2(VC13)
+	.dc.b	C2(VC13),C3(VC13),C2(VC13),C2(VC13),C2(VC13),C2(VC13),G2(VC13),C3(VC13)
+	.dc.b	D2L(L8,VC13),D3L(L16,VC13),D2(VC13),D2(VC13),D2(VC13),E2(VC13),D2(VC13)
+	.dc.b	D2(VC13),D3(VC13),D2(VC13),D2(VC13),D2(VC13),D2(VC13),A2(VC13),D2(VC13)
+	.dc.b	D2(VC13),D2(VC13),D3(VC13),D2(VC13),A2(VC13),D2(VC13),F2(VC13),D2(VC13)
+	.dc.b	D2(VC13),D3(VC13),D2(VC13),D2(VC13),D2(VC13),D2(VC13),A2(VC13),D3(VC13)
+	.dc.b	REPEAT_END(2,0,0)
+	.dc.b	LOOP
+	.dc.l	LOOP_13
+	.dc.b	END
+
+// Filt
+CH_14:
+	.dc.b	BPM(TEMPO),REVERB(15,10)
+	.dc.b	VOICE(21),AR(120),RR(6),LFO(0,0,0),DETUNE(0)
+LOOP_14:
+	.dc.b	PAN(8),PANNING(255,1)
+	.dc.b	C2LG(L2,100,120),TIE(L2,100),TIE(L2,100),TIE(L2,99)
+	.dc.b	PAN(8),PANNING(255,16)
+	.dc.b	D2LG(L2,100,120),TIE(L2,100),TIE(L2,100),TIE(L2,99)
+	.dc.b	PAN(8),PANNING(255,1)
+	.dc.b	C3LG(L2,100,120),TIE(L2,100),TIE(L2,100),TIE(L2,99)
+	.dc.b	PAN(8),PANNING(255,16)
+	.dc.b	D3LG(L2,100,120),TIE(L2,100),TIE(L2,100),TIE(L2,99)
+	.dc.b	LOOP
+	.dc.l	LOOP_14
+	.dc.b	END
+
+CH_15:
+CH_16:
+	.dc.b	END
+DATA_END:
+	.dc.b	END
+
+
